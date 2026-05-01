@@ -17,7 +17,7 @@
         </p>
         <div class="hero-actions">
             <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
-            <a href="{{ url_for('login') }}" class="btn-secondary">See how it works</a>
+            <a href="#" class="btn-secondary" id="open-modal">See how it works</a>
         </div>
     </div>
     <div class="hero-visual">
@@ -95,5 +95,52 @@
         <a href="{{ url_for('register') }}" class="btn-primary">Create free account</a>
     </div>
 </section>
+
+<!-- Video Modal -->
+<div class="modal-overlay" id="video-modal">
+    <div class="modal-content">
+        <button class="modal-close" id="modal-close">&times;</button>
+        <div class="video-wrapper">
+            <iframe id="video-frame" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<script>
+(function() {
+    const modal = document.getElementById('video-modal');
+    const openBtn = document.getElementById('open-modal');
+    const closeBtn = document.getElementById('modal-close');
+    const videoFrame = document.getElementById('video-frame');
+
+    // YouTube video URL (placeholder - replace with actual video ID)
+    const videoUrl = 'https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1';
+
+    openBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.classList.add('modal-active');
+        videoFrame.src = videoUrl;
+    });
+
+    closeBtn.addEventListener('click', function() {
+        modal.classList.remove('modal-active');
+        videoFrame.src = '';
+    });
+
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            modal.classList.remove('modal-active');
+            videoFrame.src = '';
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('modal-active')) {
+            modal.classList.remove('modal-active');
+            videoFrame.src = '';
+        }
+    });
+})();
+</script>
 
 {% endblock %}
